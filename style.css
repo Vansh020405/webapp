@@ -1,0 +1,162 @@
+body {
+    background-color: #f8f9fa;
+}
+.hero-section {
+    background: linear-gradient(135deg, #6f1ab6, #9b2ec8);
+    color: white;
+    border-radius: 20px;
+    padding: 50px;
+    position: relative;
+    text-align: left;
+}
+.chat-bubble {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    display: inline-block;
+    margin: 5px;
+}
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.search-bar {
+    background: white;
+    border-radius: 50px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search-bar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    margin: 0 10px;
+}
+.btn-orange {
+    background: #ff5a00;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+.deals-section {
+        background: linear-gradient(135deg, #6f1ab6, #9b2ec8);
+        color: white;
+        border-radius: 20px;
+        padding: 40px;
+        position: relative;
+        text-align: left;
+    }
+    .deal-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding-bottom: 15px;
+    }
+    .deal-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .discount-tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #d90479;
+        color: white;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+    .deal-details {
+        padding: 15px;
+        color: black;
+    }
+    .deal-details h5 {
+        font-weight: bold;
+    }
+    .rating {
+        color: #ffb400;
+        font-weight: bold;
+    }
+    .swiper-button-next, .swiper-button-prev {
+        color: white;
+    }
+    .discover-btn {
+        background: white;
+        color: black;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: bold;
+        border: none;
+        display: block;
+        margin: 20px auto;
+    }
+    .highlight {
+        color: #d1006f;
+        font-weight: bold;
+    }
+    .feature-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px;
+    }
+    .feature-text {
+        max-width: 50%;
+    }
+    .feature-image img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 20px;
+    }
+    .cta-button {
+        background-color: #ffcc00;
+        color: black;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 20px;
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    .cta-button:hover {
+        background-color: #e6b800;
+    }
+
+
+
+    .commitment-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 20px;
+    }
+    .commitment-text {
+        max-width: 500px;
+    }
+    .commitment-image img {
+        max-width: 100%;
+        border-radius: 15px;
+}  
+    .footer {
+        background-color: #000;
+        color: #fff;
+        padding: 40px 0;
+    }
+    .footer a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .footer a:hover {
+        text-decoration: underline;
+  }
