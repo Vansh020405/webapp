@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
-app = Flask(__name__)
+Base = declarative_base()
+
+app = Flask(_name_)
 app.secret_key = 'your_secret_key'  
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -17,14 +21,17 @@ class SearchData(db.Model):
     checkin_date = db.Column(db.String(50), nullable=False)
     checkout_date = db.Column(db.String(50), nullable=False)
     guests = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __repr__(self) -> str:
+    def _repr_(self) -> str:
         return f"{self.id} - {self.location}"
 
 class User(db.Model):
+    _tablename_ = 'user'
+    
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)  
+    email = db.Column(db.String, unique=True)
+    password_hash = db.Column(db.String)  # Ensure this line is present
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)  
@@ -53,12 +60,11 @@ def login():
 
         print("Username:", email, "Password:", password)
 
-       
         user = User.query.filter_by(email=email).first()
 
-        
         if user and user.check_password(password):
             session["user"] = email  
+            session["user_id"] = user.id  # Store the user ID in the session
             print("Login successful, redirecting...")
             return redirect(url_for("user"))  
         else:
@@ -66,6 +72,7 @@ def login():
             return "Invalid credentials, please try again.", 401
 
     return render_template("login.html")
+
 
 # User dashboard route
 @app.route("/user")
@@ -81,19 +88,21 @@ def signup():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        # Check if user already exists
+        # Check if the user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return "User already exists. Try logging in."
+            return "Email already registered. Please log in.", 409
 
-        # Save new user to the database
-        new_user = User(email=email, password=password)
+        # Create a new user
+        new_user = User(email=email)
+        new_user.set_password(password)  # Hash the password
         db.session.add(new_user)
         db.session.commit()
 
-        return redirect(url_for("login"))  # Redirect to login after signup
+        print("User registered successfully.")
+        return redirect(url_for("index"))  # Redirect to home page
 
-    return render_template("signup.html")  # Show the signup form
+    return render_template("signup.html")  # Render signup page for GET requests
 
 # Logout route
 @app.route("/logout")
@@ -106,6 +115,14 @@ def logout():
 def email():
     return render_template('email.html')
 
+@app.route('/accom')
+def accomadation():
+    return render_template('accom.html')
+
+@app.route('/homepg')
+def homepg():
+    return render_template('index.html')
+
 
 @app.route('/listprop')
 def list_properties():
@@ -116,19 +133,32 @@ def all_login():
     return render_template('profile.html')
 
 
+
+
 @app.route('/search', methods=['POST'])
 def search():
+    if "user_id" not in session:
+        return "You must be logged in to perform a search.", 403  # Prevent unauthorized access
+
     location = request.form.get('location')
     checkin_date = request.form.get('checkin_date')
     checkout_date = request.form.get('checkout_date')
     guests = request.form.get('guests')
 
-    
-    new_search = SearchData(location=location, checkin_date=checkin_date, checkout_date=checkout_date, guests=int(guests))
+    user_id = session.get('user_id')  # Retrieve user ID from session
+
+    new_search = SearchData(
+        location=location,
+        checkin_date=checkin_date,
+        checkout_date=checkout_date,
+        guests=int(guests),
+        user_id=user_id  # Ensure user_id is not None
+    )
     db.session.add(new_search)
     db.session.commit()
 
-    return redirect(url_for('index'))  
+    return redirect(url_for('index'))    
+ 
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
