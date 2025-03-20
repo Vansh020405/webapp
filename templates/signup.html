@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .video-background iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* Maintain 16:9 aspect ratio */
+            min-height: 100vh;
+            min-width: 177.77vh;
+            transform: translate(-50%, -50%);
+        }
+        .wrapper {
+            display: flex;
+            justify-content: flex-start; /* Move the box further to the left */
+            align-items: flex-start; /* Move the box further up */
+            height: 100vh;
+            position: relative;
+            padding-left: 5%; /* Adjust the left positioning */
+            padding-top: 5%; /* Adjust the top positioning */
+        }
+        .signup-container {
+            background: rgba(255, 255, 255, 0.5); /* More translucent background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .signup-container h2 {
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .signup-container input, .signup-container button {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .signup-container button {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 12px;
+            width: 70%;
+        }
+        .signup-container p {
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/NlKC-qMaQN0?autoplay=1&mute=1&loop=1&playlist=NlKC-qMaQN0" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="wrapper">
+        <div class="signup-container">
+            <h2>Create an Account</h2>
+            <form action="/signup" method="POST">
+                <input type="text" name="fullname" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button style="margin: 30px; " type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="/email" style="color: #6a11cb; text-decoration: none; font-weight: bold;">Login</a></p>
+        </div>
+    </div>
+</body>
+</html> 
