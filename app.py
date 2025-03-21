@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Define a model for storing search data
+
 class SearchData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.String(100), nullable=False)
@@ -64,7 +64,7 @@ def login():
 
         if user and user.check_password(password):
             session["user"] = email  
-            session["user_id"] = user.id  # Store the user ID in the session
+            session["user_id"] = user.id 
             print("Login successful, redirecting...")
             return redirect(url_for("user"))  
         else:
@@ -79,7 +79,7 @@ def login():
 def user():
     if "user" in session:
         return render_template("user.html", user=session["user"])
-    return redirect(url_for("login"))  # Redirect to login if not logged in
+    return redirect(url_for("login")) 
 
 # Signup route
 @app.route("/signup", methods=["GET", "POST"])
@@ -100,17 +100,17 @@ def signup():
         db.session.commit()
 
         print("User registered successfully.")
-        return redirect(url_for("index"))  # Redirect to home page
+        return redirect(url_for("index"))  
 
-    return render_template("signup.html")  # Render signup page for GET requests
+    return render_template("signup.html") 
 
-# Logout route
+
 @app.route("/logout")
 def logout():
-    session.pop("user", None)  # Clear session
+    session.pop("user", None) 
     return redirect(url_for("index"))
 
-# Email page route
+
 @app.route('/email')
 def email():
     return render_template('email.html')
@@ -138,22 +138,21 @@ def all_login():
 @app.route('/search', methods=['POST'])
 def search():
     if "user_id" not in session:
-        return "You must be logged in to perform a search.", 403  # Prevent unauthorized access
+        return "You must be logged in to perform a search.", 403  
 
     location = request.form.get('location')
     checkin_date = request.form.get('checkin_date')
     checkout_date = request.form.get('checkout_date')
     guests = request.form.get('guests')
 
-    user_id = session.get('user_id')  # Retrieve user ID from session
+    user_id = session.get('user_id') 
 
     new_search = SearchData(
         location=location,
         checkin_date=checkin_date,
         checkout_date=checkout_date,
         guests=int(guests),
-        user_id=user_id  # Ensure user_id is not None
-    )
+        user_id=user_id
     db.session.add(new_search)
     db.session.commit()
 
