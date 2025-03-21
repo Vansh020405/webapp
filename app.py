@@ -74,28 +74,27 @@ def login():
     return render_template("login.html")
 
 
-# User dashboard route
 @app.route("/user")
 def user():
     if "user" in session:
         return render_template("user.html", user=session["user"])
     return redirect(url_for("login")) 
 
-# Signup route
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
 
-        # Check if the user already exists
+      
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return "Email already registered. Please log in.", 409
 
-        # Create a new user
+      
         new_user = User(email=email)
-        new_user.set_password(password)  # Hash the password
+        new_user.set_password(password) 
         db.session.add(new_user)
         db.session.commit()
 
