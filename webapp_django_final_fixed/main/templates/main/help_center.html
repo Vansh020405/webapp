@@ -1,0 +1,300 @@
+{% extends "main/base.html" %}
+{% block title %}Help Center - Hostel World{% endblock %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<!-- Swiper.js for Carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">HOSTELWORLD</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/listprop">List Your Properties</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Explore 
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item active" href="{% url 'help_center' %}">Help Center</a></li>
+                  <li><a class="dropdown-item" href="{% url 'hostel_awards' %}">Hostel Awards</a></li>
+                </ul>
+              </li>
+            </ul>
+           
+              
+              <button class="btn btn-outline-success" style="margin-left: 10px;text-align: center; width: 250px;background-color: #6c5ce7;justify-content: center;align-items: center;color: white;"><a href="{% url 'email' %}" style="text-decoration: none;color: white;" >SIGN IN</a></button>
+    
+          </div>
+        </div>
+      </nav>
+
+    <!-- Help Center Hero Section -->
+    <div style="background-color: #6c5ce7; padding: 40px 0; color: white; margin-bottom: 40px;">
+        <div class="container">
+            <h1 class="mb-4">Help Center</h1>
+            <p class="lead mb-4">Find answers to your questions and get the support you need for your travels.</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <!-- Left Sidebar with Categories -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#booking" class="list-group-item list-group-item-action active">Booking Information</a>
+                    <a href="#payment" class="list-group-item list-group-item-action">Payment & Pricing</a>
+                    <a href="#cancellation" class="list-group-item list-group-item-action">Cancellation Policy</a>
+                    <a href="#account" class="list-group-item list-group-item-action">Account Management</a>
+                    <a href="#contact" class="list-group-item list-group-item-action">Contact Us</a>
+                </div>
+            </div>
+
+            <!-- Right Content Area -->
+            <div class="col-md-9">
+                <!-- Booking Information Section -->
+                <div id="booking" class="mb-5">
+                    <h2 class="mb-4">Booking Information</h2>
+                    
+                    <div class="accordion" id="bookingAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    How do I make a booking?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#bookingAccordion">
+                                <div class="accordion-body">
+                                    <p>Making a booking on Hostelworld is simple:</p>
+                                    <ol>
+                                        <li>Enter your destination, dates, and number of guests in the search bar</li>
+                                        <li>Browse through the available hostels and select one that suits your needs</li>
+                                        <li>Choose your room type and number of beds</li>
+                                        <li>Fill in your personal details and payment information</li>
+                                        <li>Confirm your booking</li>
+                                    </ol>
+                                    <p>You'll receive a confirmation email with all the details of your booking.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Do I need to create an account to book?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#bookingAccordion">
+                                <div class="accordion-body">
+                                    <p>Yes, you need to create an account or log in to make a booking. This allows you to:</p>
+                                    <ul>
+                                        <li>View and manage your bookings</li>
+                                        <li>Receive important updates about your stay</li>
+                                        <li>Connect with other travelers staying at the same hostel</li>
+                                        <li>Leave reviews after your stay</li>
+                                    </ul>
+                                    <p>Creating an account is free and only takes a minute.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    How do I know if my booking is confirmed?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#bookingAccordion">
+                                <div class="accordion-body">
+                                    <p>Once your booking is complete, you'll receive:</p>
+                                    <ul>
+                                        <li>An immediate confirmation page on the website</li>
+                                        <li>A confirmation email with your booking details</li>
+                                        <li>Access to view your booking in the "My Bookings" section of your account</li>
+                                    </ul>
+                                    <p>If you don't receive a confirmation email within 24 hours, please check your spam folder or contact our support team.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payment & Pricing Section -->
+                <div id="payment" class="mb-5">
+                    <h2 class="mb-4">Payment & Pricing</h2>
+                    
+                    <div class="accordion" id="paymentAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#paymentOne" aria-expanded="true" aria-controls="paymentOne">
+                                    What payment methods do you accept?
+                                </button>
+                            </h2>
+                            <div id="paymentOne" class="accordion-collapse collapse show" data-bs-parent="#paymentAccordion">
+                                <div class="accordion-body">
+                                    <p>We accept various payment methods including:</p>
+                                    <ul>
+                                        <li>Credit cards (Visa, Mastercard, American Express)</li>
+                                        <li>Debit cards</li>
+                                        <li>PayPal</li>
+                                        <li>Apple Pay (on iOS devices)</li>
+                                        <li>Google Pay (on Android devices)</li>
+                                    </ul>
+                                    <p>Payment options may vary depending on your location and the hostel's policies.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paymentTwo" aria-expanded="false" aria-controls="paymentTwo">
+                                    Do I pay the full amount when booking?
+                                </button>
+                            </h2>
+                            <div id="paymentTwo" class="accordion-collapse collapse" data-bs-parent="#paymentAccordion">
+                                <div class="accordion-body">
+                                    <p>This depends on the hostel's payment policy:</p>
+                                    <ul>
+                                        <li><strong>Deposit only:</strong> Some hostels require only a deposit (typically 10-15% of the total) at the time of booking, with the remaining balance paid directly to the hostel upon arrival.</li>
+                                        <li><strong>Full payment:</strong> Other hostels require full payment at the time of booking.</li>
+                                    </ul>
+                                    <p>The payment details will be clearly displayed during the booking process before you confirm your reservation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cancellation Policy Section -->
+                <div id="cancellation" class="mb-5">
+                    <h2 class="mb-4">Cancellation Policy</h2>
+                    
+                    <div class="accordion" id="cancellationAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cancellationOne" aria-expanded="true" aria-controls="cancellationOne">
+                                    How do I cancel my booking?
+                                </button>
+                            </h2>
+                            <div id="cancellationOne" class="accordion-collapse collapse show" data-bs-parent="#cancellationAccordion">
+                                <div class="accordion-body">
+                                    <p>To cancel your booking:</p>
+                                    <ol>
+                                        <li>Log in to your Hostelworld account</li>
+                                        <li>Go to "My Bookings"</li>
+                                        <li>Find the booking you wish to cancel</li>
+                                        <li>Click on "Cancel Booking"</li>
+                                        <li>Follow the instructions to complete the cancellation</li>
+                                    </ol>
+                                    <p>You'll receive an email confirming your cancellation.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cancellationTwo" aria-expanded="false" aria-controls="cancellationTwo">
+                                    Will I get a refund if I cancel?
+                                </button>
+                            </h2>
+                            <div id="cancellationTwo" class="accordion-collapse collapse" data-bs-parent="#cancellationAccordion">
+                                <div class="accordion-body">
+                                    <p>Refund policies vary by hostel and depend on:</p>
+                                    <ul>
+                                        <li>The hostel's specific cancellation policy (Free, Flexible, or Strict)</li>
+                                        <li>How far in advance you cancel</li>
+                                        <li>Whether you paid a deposit or the full amount</li>
+                                    </ul>
+                                    <p>The cancellation policy is always displayed on the hostel's page before you book and in your booking confirmation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Us Section -->
+                <div id="contact" class="mb-5">
+                    <h2 class="mb-4">Contact Us</h2>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Need more help?</h5>
+                            <p class="card-text">Our customer support team is available 24/7 to assist you with any questions or concerns.</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-envelope me-2"></i> Email Support</h6>
+                                    <p>support@hostelworld.com</p>
+                                    <p>Response time: Within 24 hours</p>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-phone me-2"></i> Phone Support</h6>
+                                    <p>+1 (800) 123-4567</p>
+                                    <p>Available 24/7</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h6><i class="fas fa-comment me-2"></i> Live Chat</h6>
+                                <p>Available on our website and mobile app</p>
+                                <button class="btn btn-primary">Start Chat</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <h5>Accommodation</h5>
+                    <a href="#">Hostels</a><br>
+                    <a href="#">Hotels</a><br>
+                    <a href="#">Bed and Breakfast</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <a href="#">Blog</a><br>
+                    <a href="#">Booking Guarantee</a><br>
+                    <a href="{% url 'hostel_awards' %}">Hostel Awards</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>About Us</h5>
+                    <a href="#">Hostelworld Group PLC</a><br>
+                    <a href="#">Press</a><br>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Work With Us</h5>
+                    <a href="#">Hostel Sign Up</a><br>
+                    <a href="#">Affiliate Program</a><br>
+                    <a href="#">Hostelworld Inbox</a>
+                </div>
+            </div>
+            <div class="mt-4">
+                <p>&copy; 1999-2025 Hostelworld.com Limited</p>
+                <a href="#">Data Protection Notice & DSA</a> | 
+                <a href="#">Terms & Legal</a> | 
+                <a href="#">Cookie Preferences</a>
+            </div>
+        </div>
+    </footer>
+    
+<!-- Include FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Messages section -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="row">
+        <!-- Hostel Details Section -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="position-relative">
+                    <img src="{{ hostel.image_url }}" alt="{{ hostel.name }}" class="card-img-top" style="height: 400px; object-fit: cover;">
+                    {% if hostel.discount_percentage > 0 %}
+                    <span class="position-absolute top-0 start-0 bg-danger text-white py-1 px-3 m-3 rounded">{{ hostel.discount_percentage }}% OFF</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="card-title mb-0">{{ hostel.name }}</h2>
+                        <div>
+                            <span class="badge bg-primary rounded-pill fs-6">⭐ {{ hostel.rating }}</span>
+                            <small class="text-muted ms-2">{{ hostel.reviews_count }} reviews</small>
+                        </div>
+                    </div>
+                    <p class="card-text fs-5 mb-3">
+                        <i class="bi bi-geo-alt-fill text-danger"></i> {{ hostel.location }}
+                    </p>
+                    <hr>
+                    <h4>About this hostel</h4>
+                    <p class="card-text">{{ hostel.description }}</p>
+                    
+                    <h4 class="mt-4">Amenities</h4>
+                    <div class="row">
+                        {% for amenity in amenities_list %}
+                        <div class="col-md-4 mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>{{ amenity }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <h4 class="mt-4">Price</h4>
+                    <div class="d-flex align-items-center">
+                        <h3 class="text-primary mb-0">${{ hostel.price_per_night }}</h3>
+                        <span class="text-muted ms-2">per night</span>
+                        {% if hostel.discount_percentage > 0 %}
+                        <span class="text-decoration-line-through text-muted ms-3">${{ original_price }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reviews Section -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Reviews</h3>
+                    
+                    {% if reviews %}
+                        {% for review in reviews %}
+                        <div class="border-bottom mb-3 pb-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="mb-1">{{ review.user.username }}</h5>
+                                    <small class="text-muted">{{ review.created_at|date:"F d, Y" }}</small>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">{{ review.rating }}/10</span>
+                            </div>
+                            <p class="mt-2">{{ review.comment }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center text-muted">No reviews yet. Be the first to leave a review!</p>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
+                    <!-- Add Review Form -->
+                    <div class="mt-4">
+                        <h4>Add Your Review</h4>
+                        <form method="post" action="{% url 'add_review' hostel.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating (1-10)</label>
+                                <input type="number" class="form-control" id="rating" name="rating" min="1" max="10" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Your Review</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mt-4">
+                        <a href="{% url 'email' %}">Login</a> to leave a review.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Form Section -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px; z-index: 100;">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Book Your Stay</h4>
+                </div>
+                <div class="card-body">
+                    <form id="bookingForm" method="POST" action="{% url 'book_hostel' hostel.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="check_in_date" class="form-label">Check-in Date</label>
+                            <input type="date" class="form-control" id="check_in_date" name="check_in_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="check_out_date" class="form-label">Check-out Date</label>
+                            <input type="date" class="form-control" id="check_out_date" name="check_out_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% endif %}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="guests" class="form-label">Number of Guests</label>
+                            <input type="number" class="form-control" id="guests" name="guests" min="1" value="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comments" class="form-label">Special Requests (Optional)</label>
+                            <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{% if user.email %}{{ user.email }}{% endif %}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone (optional)</label>
+                            <input type="tel" class="form-control" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Price per night:</span>
+                                <span>${{ hostel.price_per_night }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between" id="totalNights">
+                                <span>Total nights:</span>
+                                <span>0</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total:</span>
+                                <span id="totalPrice">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitButton">Book Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mt-4">
+        <a href="{% url 'tweet_list' %}" class="btn btn-primary">View Feedbacks</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'tweet_create' %}" class="btn btn-success">Leave Feedback</a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingForm = document.getElementById('bookingForm');
+        const submitButton = document.getElementById('submitButton');
+        const checkInInput = document.getElementById('check_in_date');
+        const checkOutInput = document.getElementById('check_out_date');
+        const guestsInput = document.getElementById('guests');
+        const pricePerNight = parseFloat('{{ hostel.price_per_night }}');
+        const totalPriceDisplay = document.getElementById('totalPrice');
+
+        // Calculate total price when dates or guests change
+        function calculateTotalPrice() {
+            const checkIn = new Date(checkInInput.value);
+            const checkOut = new Date(checkOutInput.value);
+            const guests = parseInt(guestsInput.value) || 1;
+            
+            if (checkIn && checkOut && checkOut > checkIn) {
+                const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                const total = nights * pricePerNight;
+                if (totalPriceDisplay) {
+                    totalPriceDisplay.textContent = total.toFixed(2);
+                }
+                return total;
+            }
+            return pricePerNight;
+        }
+
+        checkInInput.addEventListener('change', calculateTotalPrice);
+        checkOutInput.addEventListener('change', calculateTotalPrice);
+        guestsInput.addEventListener('change', calculateTotalPrice);
+
+        // Set minimum dates for check-in and check-out
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        checkInInput.min = today.toISOString().split('T')[0];
+        checkOutInput.min = tomorrow.toISOString().split('T')[0];
+        
+        checkInInput.addEventListener('change', function() {
+            const nextDay = new Date(this.value);
+            nextDay.setDate(nextDay.getDate() + 1);
+            checkOutInput.min = nextDay.toISOString().split('T')[0];
+            
+            if (checkOutInput.value && new Date(checkOutInput.value) <= new Date(this.value)) {
+                checkOutInput.value = nextDay.toISOString().split('T')[0];
+            }
+            calculateTotalPrice();
+        });
+    });
+</script>
+
+<!-- Success Modal -->
+<div class="modal fade" id="bookingSuccessModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bookingSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+                <h3 class="mb-4">Booking Successful!</h3>
+                <p class="lead mb-4">Thank you for choosing {{ hostel.name }}!</p>
+                <p class="mb-4">Your booking has been confirmed. You can view all details in your bookings page.</p>
+                <div class="progress mb-3" style="height: 4px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                </div>
+                <p class="text-muted mb-0">
+                    <small>Redirecting to My Bookings page...</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

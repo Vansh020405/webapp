@@ -1,0 +1,298 @@
+{% extends "main/base.html" %}
+{% block title %}Join Hostel World - Sign Up{% endblock %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    :root {
+        --primary-color: #6c5ce7;
+        --secondary-color: #a29bfe;
+        --accent-color: #fd79a8;
+        --text-color: #2d3436;
+        --light-color: #ffffff;
+        --dark-color: #2d3436;
+        --success-color: #00b894;
+        --error-color: #d63031;
+    }
+    
+    .signup-page {
+        min-height: 100vh;
+        display: flex;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .signup-container {
+        margin: auto;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.8s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .signup-form-container {
+        background: var(--light-color);
+        padding: 50px;
+        width: 50%;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .signup-image-container {
+        width: 50%;
+        background-image: url('https://a.hwstatic.com/image/upload/q_auto,f_auto/hw/auth0/Desktop_image.png');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 40px;
+        color: var(--light-color);
+    }
+    
+    .signup-image-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+        z-index: 0;
+    }
+    
+    .image-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .signup-form-container h2 {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 28px;
+        position: relative;
+    }
+    
+    .signup-form-container h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--primary-color);
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .form-group i {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        color: #aaa;
+        transition: all 0.3s;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        outline: none;
+    }
+    
+    .form-control:focus + i {
+        color: var(--primary-color);
+    }
+    
+    .btn-signup {
+        width: 100%;
+        padding: 14px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+    }
+    
+    .btn-signup:hover {
+        background: #5649c0;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    }
+    
+    .btn-signup:active {
+        transform: translateY(0);
+    }
+    
+    .login-link {
+        text-align: center;
+        margin-top: 25px;
+        color: var(--text-color);
+    }
+    
+    .login-link a {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    
+    .login-link a:hover {
+        color: #5649c0;
+        text-decoration: underline;
+    }
+    
+    /* Password strength indicator */
+    .password-strength {
+        height: 5px;
+        margin-top: 5px;
+        border-radius: 3px;
+        transition: all 0.3s;
+    }
+    
+    .strength-weak {
+        width: 30%;
+        background: var(--error-color);
+    }
+    
+    .strength-medium {
+        width: 60%;
+        background: #f39c12;
+    }
+    
+    .strength-strong {
+        width: 100%;
+        background: var(--success-color);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .signup-container {
+            flex-direction: column;
+            max-width: 90%;
+        }
+        
+        .signup-form-container,
+        .signup-image-container {
+            width: 100%;
+        }
+        
+        .signup-image-container {
+            min-height: 200px;
+            order: -1;
+        }
+        
+        .signup-form-container {
+            padding: 30px;
+        }
+    }
+</style>
+<div class="signup-page">
+    <div class="signup-container">
+        <div class="signup-form-container">
+            <h2>Join Hostel World</h2>
+            <p>Create your account and start connecting with travelers around the world.</p>
+            
+            <form action="{% url 'signup' %}" method="POST" id="signupForm">
+                {% csrf_token %}
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Full Name" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-control" name="confirm_password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <button type="submit" class="btn-signup">Create Account</button>
+            </form>
+            
+            <div class="login-link">
+                <p>Already have an account? <a href="{% url 'email' %}">Log in</a></p>
+            </div>
+        </div>
+        
+        <div class="signup-image-container">
+            <div class="image-content">
+                <h3>Meet fellow travelers</h3>
+                <p>Join thousands of travelers connecting through hostels worldwide. Share experiences, make friends, and create unforgettable memories.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Password strength indicator
+    document.getElementById('password').addEventListener('input', function() {
+        const password = this.value;
+        const strengthIndicator = document.getElementById('passwordStrength');
+        
+        // Remove all classes
+        strengthIndicator.classList.remove('strength-weak', 'strength-medium', 'strength-strong');
+        
+        if (password.length > 0) {
+            if (password.length < 6) {
+                strengthIndicator.classList.add('strength-weak');
+            } else if (password.length < 10) {
+                strengthIndicator.classList.add('strength-medium');
+            } else {
+                strengthIndicator.classList.add('strength-strong');
+            }
+        }
+    });
+    
+    // Password confirmation validation
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
+            event.preventDefault();
+            alert('Passwords do not match!');
+        }
+    });
+</script>
+{% endblock %}

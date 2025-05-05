@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% block title %}Login Page{% endblock %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: auto;
+        padding: 40px;
+    }
+    .image-container img {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+</style>
+    <div class="container d-flex align-items-center min-vh-100">
+        <div class="row w-100">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="login-container">
+                    <a href="{% url 'index' %}" class="text-decoration-none">&larr; Back to Home</a>
+                    <h2 class="fw-bold mt-3">Welcome traveller!</h2>
+                    <p>Log in to unlock extras and start connecting with travelers heading to your hostel.</p>
+
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <input type="email" name="email" id="email" 
+                                class="form-control" placeholder="Email Address" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" id="password" 
+                                class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 text-white">Login</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-decoration-none">Forgot your password?</a>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="{% url 'signup' %}" class="fw-bold">Sign Up</a></p>
+
+                    </div>
+                    <div>
+                    {% if user.is_authenticated %}
+                        <p class="mt-3">Welcome, {{ user.username }}!</p>
+                        <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm mt-2">Logout</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <div class="image-container text-center">
+                    <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto/hw/auth0/Desktop_image.png" 
+                        alt="Travel Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

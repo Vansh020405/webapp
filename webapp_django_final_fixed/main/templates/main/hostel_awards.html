@@ -1,0 +1,369 @@
+{% extends "main/base.html" %}
+{% block title %}Hostel Awards - Hostel World{% endblock %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<!-- Swiper.js for Carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">HOSTELWORLD</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/listprop">List Your Properties</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Explore 
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'help_center' %}">Help Center</a></li>
+                  <li><a class="dropdown-item active" href="{% url 'hostel_awards' %}">Hostel Awards</a></li>
+                </ul>
+              </li>
+            </ul>
+           
+              
+              <button class="btn btn-outline-success" style="margin-left: 10px;text-align: center; width: 250px;background-color: #6c5ce7;justify-content: center;align-items: center;color: white;"><a href="{% url 'email' %}" style="text-decoration: none;color: white;" >SIGN IN</a></button>
+    
+          </div>
+        </div>
+      </nav>
+
+    <!-- Hostel Awards Hero Section -->
+    <div style="background-color: #FF5A00; padding: 40px 0; color: white; margin-bottom: 40px;">
+        <div class="container">
+            <h1 class="mb-4">Hostel Awards 2025</h1>
+            <p class="lead mb-4">Celebrating the world's most outstanding hostels as voted by travelers like you!</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">The HOSCARS: Hostelworld Customer Annual Ratings</h2>
+            <p class="lead">Recognizing excellence in the hostel industry across various categories</p>
+        </div>
+
+        <!-- Award Categories Tabs -->
+        <ul class="nav nav-tabs" id="awardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overall-tab" data-bs-toggle="tab" data-bs-target="#overall" type="button" role="tab" aria-controls="overall" aria-selected="true">Best Overall</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="value-tab" data-bs-toggle="tab" data-bs-target="#value" type="button" role="tab" aria-controls="value" aria-selected="false">Best Value</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="location-tab" data-bs-toggle="tab" data-bs-target="#location" type="button" role="tab" aria-controls="location" aria-selected="false">Best Location</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="atmosphere-tab" data-bs-toggle="tab" data-bs-target="#atmosphere" type="button" role="tab" aria-controls="atmosphere" aria-selected="false">Best Atmosphere</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="facilities-tab" data-bs-toggle="tab" data-bs-target="#facilities" type="button" role="tab" aria-controls="facilities" aria-selected="false">Best Facilities</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="awardTabsContent">
+            <!-- Best Overall Hostels -->
+            <div class="tab-pane fade show active" id="overall" role="tabpanel" aria-labelledby="overall-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <!-- Gold Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold">🏆 GOLD AWARD</span>
+                            </div>
+                            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/25505278.jpg?k=5e523714b5648de97798b81973b52d693ade61fff6314c33f8ac88ae28ae8fda&o=&hp=1" class="card-img-top" alt="Sloth Backpackers Hostel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Sloth Backpackers Hostel</h5>
+                                <p class="card-text text-muted">Monteverde, Costa Rica</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.8</div>
+                                    <small class="text-muted">(1,244 reviews)</small>
+                                </div>
+                                <p class="card-text">"An eco-friendly paradise with incredible staff and the best social atmosphere you'll find anywhere."</p>
+                                <a href="{% url 'hostel_detail' 5 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Silver Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-secondary px-4 py-2 rounded-pill fw-bold">🥈 SILVER AWARD</span>
+                            </div>
+                            <img src="https://media.timeout.com/images/103849378/image.jpg" class="card-img-top" alt="Rivoli Cinema Hostel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Rivoli Cinema Hostel</h5>
+                                <p class="card-text text-muted">Porto, Portugal</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.6</div>
+                                    <small class="text-muted">(3,656 reviews)</small>
+                                </div>
+                                <p class="card-text">"A movie-themed hostel with incredible design, perfect location, and staff that go above and beyond."</p>
+                                <a href="{% url 'hostel_detail' 2 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bronze Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-danger px-4 py-2 rounded-pill fw-bold">🥉 BRONZE AWARD</span>
+                            </div>
+                            <img src="https://th.bing.com/th/id/OIP.xV4GhSsmmzny_2v9I15ZNAHaE8?rs=1&pid=ImgDetMain" class="card-img-top" alt="Sir Toby's Midtown" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Sir Toby's Midtown</h5>
+                                <p class="card-text text-muted">Prague, Czech Republic</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.5</div>
+                                    <small class="text-muted">(2,146 reviews)</small>
+                                </div>
+                                <p class="card-text">"Historic charm meets modern amenities with the best beer garden in Prague and legendary pub crawls."</p>
+                                <a href="{% url 'hostel_detail' 4 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Value Hostels -->
+            <div class="tab-pane fade" id="value" role="tabpanel" aria-labelledby="value-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <!-- Gold Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold">🏆 GOLD AWARD</span>
+                            </div>
+                            <img src="https://th.bing.com/th/id/OIP.tIE6BZyHg2CvfGU6iY_6aAHaE7?rs=1&pid=ImgDetMain" class="card-img-top" alt="NEW FRIENDS HOSTEL & BAR" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">NEW FRIENDS HOSTEL & BAR</h5>
+                                <p class="card-text text-muted">Valladolid, Mexico</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.2</div>
+                                    <small class="text-muted">(739 reviews)</small>
+                                </div>
+                                <p class="card-text">"Incredible value with free breakfast, walking tours, and social events included in the unbeatable price."</p>
+                                <a href="{% url 'hostel_detail' 1 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other value hostels would go here -->
+                </div>
+            </div>
+
+            <!-- Best Location Hostels -->
+            <div class="tab-pane fade" id="location" role="tabpanel" aria-labelledby="location-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <!-- Gold Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold">🏆 GOLD AWARD</span>
+                            </div>
+                            <img src="https://media.timeout.com/images/103849378/image.jpg" class="card-img-top" alt="Rivoli Cinema Hostel" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Rivoli Cinema Hostel</h5>
+                                <p class="card-text text-muted">Porto, Portugal</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.7</div>
+                                    <small class="text-muted">(3,656 reviews)</small>
+                                </div>
+                                <p class="card-text">"Located in the heart of historic Porto, steps away from all major attractions, restaurants, and nightlife."</p>
+                                <a href="{% url 'hostel_detail' 2 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other location hostels would go here -->
+                </div>
+            </div>
+
+            <!-- Best Atmosphere Hostels -->
+            <div class="tab-pane fade" id="atmosphere" role="tabpanel" aria-labelledby="atmosphere-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <!-- Gold Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold">🏆 GOLD AWARD</span>
+                            </div>
+                            <img src="https://th.bing.com/th/id/OIP.SMYxFFkDBhaHq_e13RRqXwAAAA?rs=1&pid=ImgDetMain" class="card-img-top" alt="ELTARI Pine House" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ELTARI Pine House</h5>
+                                <p class="card-text text-muted">Malang, Indonesia</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.8</div>
+                                    <small class="text-muted">(851 reviews)</small>
+                                </div>
+                                <p class="card-text">"A true social hub with nightly events, communal dinners, and a vibe that makes solo travelers feel instantly at home."</p>
+                                <a href="{% url 'hostel_detail' 3 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other atmosphere hostels would go here -->
+                </div>
+            </div>
+
+            <!-- Best Facilities Hostels -->
+            <div class="tab-pane fade" id="facilities" role="tabpanel" aria-labelledby="facilities-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <!-- Gold Award -->
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="position-absolute" style="top: -15px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                <span class="badge bg-warning text-dark px-4 py-2 rounded-pill fw-bold">🏆 GOLD AWARD</span>
+                            </div>
+                            <img src="https://th.bing.com/th/id/OIP.xV4GhSsmmzny_2v9I15ZNAHaE8?rs=1&pid=ImgDetMain" class="card-img-top" alt="Sir Toby's Midtown" style="height: 200px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Sir Toby's Midtown</h5>
+                                <p class="card-text text-muted">Prague, Czech Republic</p>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="rating me-2">⭐ 9.6</div>
+                                    <small class="text-muted">(2,146 reviews)</small>
+                                </div>
+                                <p class="card-text">"Featuring a state-of-the-art kitchen, coworking space, cinema room, and the best hostel bar in Eastern Europe."</p>
+                                <a href="{% url 'hostel_detail' 4 %}" class="btn btn-primary">View Hostel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other facilities hostels would go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How Winners Are Selected Section -->
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold">How We Select Our Winners</h2>
+                <p>The HOSCARS (Hostelworld Customer Annual Ratings) are the most prestigious awards in the budget accommodation industry, recognizing excellence across the globe.</p>
+                
+                <div class="mt-4">
+                    <h5><i class="fas fa-star me-2"></i> Based on Real Reviews</h5>
+                    <p>Winners are determined based on over 1.2 million customer reviews submitted during the previous year.</p>
+                </div>
+                
+                <div class="mt-3">
+                    <h5><i class="fas fa-trophy me-2"></i> Strict Criteria</h5>
+                    <p>Hostels must have received at least 500 reviews in the past 12 months to qualify.</p>
+                </div>
+                
+                <div class="mt-3">
+                    <h5><i class="fas fa-globe me-2"></i> Global Recognition</h5>
+                    <p>Awards are given across multiple categories and regions to celebrate diverse hostel experiences worldwide.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto/v1644506520/pwa/chat/chat-image-1.jpg" alt="Hostel Awards" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+
+    <!-- Previous Winners Section -->
+    <div class="container my-5 py-5 bg-light rounded">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Previous Years' Winners</h2>
+            <p class="lead">Explore the hostels that have made history in our awards</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">2024 Winner</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Lub D Koh Samui</h5>
+                        <p class="card-text text-muted">Koh Samui, Thailand</p>
+                        <p class="card-text">"A beachfront paradise with incredible facilities and the friendliest staff in Thailand."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">2023 Winner</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Selina Cancun</h5>
+                        <p class="card-text text-muted">Cancun, Mexico</p>
+                        <p class="card-text">"Redefining the hostel experience with coworking spaces, wellness programs, and beachfront access."</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">2022 Winner</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Casa Gracia</h5>
+                        <p class="card-text text-muted">Barcelona, Spain</p>
+                        <p class="card-text">"Luxury meets affordability in this boutique hostel with a rooftop terrace and exceptional design."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <h5>Accommodation</h5>
+                    <a href="#">Hostels</a><br>
+                    <a href="#">Hotels</a><br>
+                    <a href="#">Bed and Breakfast</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <a href="#">Blog</a><br>
+                    <a href="#">Booking Guarantee</a><br>
+                    <a href="{% url 'help_center' %}">Help Center</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>About Us</h5>
+                    <a href="#">Hostelworld Group PLC</a><br>
+                    <a href="#">Press</a><br>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Work With Us</h5>
+                    <a href="#">Hostel Sign Up</a><br>
+                    <a href="#">Affiliate Program</a><br>
+                    <a href="#">Hostelworld Inbox</a>
+                </div>
+            </div>
+            <div class="mt-4">
+                <p>&copy; 1999-2025 Hostelworld.com Limited</p>
+                <a href="#">Data Protection Notice & DSA</a> | 
+                <a href="#">Terms & Legal</a> | 
+                <a href="#">Cookie Preferences</a>
+            </div>
+        </div>
+    </footer>
+    
+<!-- Include FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

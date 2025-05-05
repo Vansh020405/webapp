@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Booking Confirmed!</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    
+                    <h4>Thank you for your booking!</h4>
+                    <p>Your booking has been successfully confirmed. Here are your booking details:</p>
+                    
+                    <div class="booking-details mt-4">
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Booking ID:</div>
+                            <div class="col-md-8" id="bookingId"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Hostel:</div>
+                            <div class="col-md-8" id="hostelName"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Location:</div>
+                            <div class="col-md-8" id="location"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Check-in Date:</div>
+                            <div class="col-md-8" id="checkInDate"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Check-out Date:</div>
+                            <div class="col-md-8" id="checkOutDate"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Number of Guests:</div>
+                            <div class="col-md-8" id="guests"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Number of Nights:</div>
+                            <div class="col-md-8" id="nights"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Price per Night:</div>
+                            <div class="col-md-8" id="pricePerNight"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 fw-bold">Total Price:</div>
+                            <div class="col-md-8" id="totalPrice"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-4">
+                        <p class="mb-0">A confirmation email has been sent to your email address. Please check your inbox.</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'user' %}" class="btn btn-primary me-2">Go to My Account</a>
+                        <a href="{% url 'index' %}" class="btn btn-outline-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchParams = new URLSearchParams(window.location.search);
+        
+        try {
+            // Get the data parameter and parse it
+            const dataParam = searchParams.get('data');
+            if (!dataParam) {
+                throw new Error('No booking data found');
+            }
+            
+            const bookingData = JSON.parse(dataParam);
+            
+            // Update all booking details
+            document.getElementById('bookingId').textContent = bookingData.booking_id || 'N/A';
+            document.getElementById('hostelName').textContent = bookingData.hostel_name || 'N/A';
+            document.getElementById('location').textContent = bookingData.location || 'N/A';
+            document.getElementById('checkInDate').textContent = bookingData.check_in || 'N/A';
+            document.getElementById('checkOutDate').textContent = bookingData.check_out || 'N/A';
+            document.getElementById('guests').textContent = bookingData.guests || '1';
+            document.getElementById('nights').textContent = bookingData.nights || '0';
+            document.getElementById('pricePerNight').textContent = bookingData.price_per_night ? `$${bookingData.price_per_night}` : 'N/A';
+            document.getElementById('totalPrice').textContent = bookingData.total_price ? `$${bookingData.total_price}` : 'N/A';
+            
+        } catch (error) {
+            console.error('Error parsing booking data:', error);
+            // Set default values if there's an error
+            const elements = ['bookingId', 'hostelName', 'location', 'checkInDate', 'checkOutDate', 'guests', 'nights', 'pricePerNight', 'totalPrice'];
+            elements.forEach(id => document.getElementById(id).textContent = 'N/A');
+            
+            // Show error message to user
+            alert('There was an error displaying your booking details. Please check your My Account page for booking information.');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,647 @@
+{% extends "main/base.html" %}
+{% block title %}Hostel World{% endblock %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<!-- Swiper.js for Carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">HOSTELWORLD</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/listprop">List Your Properties</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Explore 
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'help_center' %}">Help Center</a></li>
+                  <li><a class="dropdown-item" href="{% url 'hostel_awards' %}">Hostel Awards</a></li>
+                </ul>
+              </li>
+            </ul>
+            <button class="btn btn-outline-success" style="margin-left: 10px;text-align: center; width: 250px;background-color: #6c5ce7;justify-content: center;align-items: center;color: white;"><a href="{% url 'email' %}" style="text-decoration: none;color: white;" >SIGN IN</a></button>
+          </div>
+        </div>
+      </nav>
+      <div class="container mt-5">
+        <div class="hero-section">
+            <h1 class="fw-bold" style="font-size: 70px;">Meet your people.</h1>
+            <p class="lead">Choose where to stay and we'll show you who with!</p>
+    
+            <!-- Chat Interaction Section -->
+            <div class="d-flex flex-wrap mt-4">
+                <div>
+                    <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_241,h_382/v1676366319/pwa/ups1" alt="" style="height: 100px;">
+                </div>
+                <div>
+                    <img src="https://a.hwstatic.com/image/upload/f_auto,h_277/pwa/hero.chats.png" style="margin-left: 800px;margin-top: -250px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <form action="{% url 'search' %}" method="POST">
+                {% csrf_token %}
+                <div class="search-bar d-flex align-items-center p-3" style="border-radius: 50px; background: white; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                    
+                    <!-- Location Input -->
+                    <div class="d-flex align-items-center" style="flex: 1;">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <input type="text" class="form-control border-0" name="location" placeholder="Where do you want to go?" required>
+                    </div>
+        
+                    <!-- Divider -->
+                    <div class="vr mx-3"></div>
+        
+                    <!-- Check-in Date -->
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt me-2"></i>
+                        <div>
+                            <small class="text-muted" style="margin-left: 23px;">Check In</small>
+                            <input type="date" class="form-control border-0" name="checkin_date" required>
+                        </div>
+                    </div>
+        
+                    <!-- Divider -->
+                    <div class="vr mx-3"></div>
+        
+                    <!-- Check-out Date -->
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt me-2"></i>
+                        <div>
+                            <small class="text-muted" style="margin-left: 23px;">Check Out</small>
+                            <input type="date" class="form-control border-0" name="checkout_date" required>
+                        </div>
+                    </div>
+        
+                    <!-- Divider -->
+                    <div class="vr mx-3"></div>
+        
+                    <!-- Guests -->
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-user-friends me-2"></i>
+                        <div>
+                            <small class="text-muted"   style="margin-left: 23px;">Guests</small>
+                            <input type="number" class="form-control border-0" name="guests" min="1" value="2" required>
+                        </div>
+                    </div>
+        
+                    <!-- Search Button -->
+                    <button class="btn btn-orange ms-3 px-4" type="submit" style="border-radius: 25px; background-color: #ff5a00; color: white; font-weight: bold;">
+                        Let's go! →
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="deals-section">
+                <h2 class="fw-bold text-center">
+                    <span class="bg-danger px-3 py-2 text-white rounded">Global Travel Deals</span>
+                </h2>
+                <br>
+                <p class="text-center fw-light">BIG discounts on the world's best hostels. <a href="#" class="text-white fw-bold">T&Cs apply.</a></p>
+    
+                <!-- Swiper Carousel -->
+                <div class="swiper mySwiper" style="padding: 20px;">
+                    <div class="swiper-wrapper" style="display: flex; gap: 20px;">
+                        <!-- Card 1 -->
+                        <div class="swiper-slide" style="flex: 0 0 23%; margin-right: 20px;">
+                            <a href="{% url 'hostel_detail' 1 %}" class="text-decoration-none">
+                                <div class="deal-card position-relative" style="height: 338px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                                    <span class="discount-tag">60%</span>
+                                    <img src="https://th.bing.com/th/id/OIP.tIE6BZyHg2CvfGU6iY_6aAHaE7?rs=1&pid=ImgDetMain" alt="Hostel" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div class="deal-details p-3">
+                                        <h5>NEW FRIENDS HOSTEL & BAR</h5>
+                                        <p class="rating">⭐ 8.9 Fabulous (739)</p>
+                                        <p>Valladolid, Mexico</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="swiper-slide" style="flex: 0 0 23%; margin-right: 20px;">
+                            <a href="{% url 'hostel_detail' 2 %}" class="text-decoration-none">
+                                <div class="deal-card position-relative" style="height: 338px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                                    <span class="discount-tag">15%</span>
+                                    <img src="https://media.timeout.com/images/103849378/image.jpg" alt="Hostel" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div class="deal-details p-3">
+                                        <h5>Rivoli Cinema Hostel</h5>
+                                        <p class="rating">⭐ 9.4 Superb (3656)</p>
+                                        <p>Porto, Portugal</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="swiper-slide" style="flex: 0 0 23%; margin-right: 20px;">
+                            <a href="{% url 'hostel_detail' 3 %}" class="text-decoration-none">
+                                <div class="deal-card position-relative" style="height: 338px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                                    <span class="discount-tag">25%</span>
+                                    <img src="https://th.bing.com/th/id/OIP.SMYxFFkDBhaHq_e13RRqXwAAAA?rs=1&pid=ImgDetMain" alt="Hostel" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div class="deal-details p-3">
+                                        <h5>ELTARI Pine House</h5>
+                                        <p class="rating">⭐ 9.4 Superb (51)</p>
+                                        <p>Malang, Indonesia</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="swiper-slide" style="flex: 0 0 23%; margin-right: 20px;">
+                            <a href="{% url 'hostel_detail' 4 %}" class="text-decoration-none">
+                                <div class="deal-card position-relative" style="height: 338px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                                    <span class="discount-tag">20%</span>
+                                    <img src="https://th.bing.com/th/id/OIP.xV4GhSsmmzny_2v9I15ZNAHaE8?rs=1&pid=ImgDetMain" alt="Hostel" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div class="deal-details p-3">
+                                        <h5>Sir Toby's Midtown</h5>
+                                        <p class="rating">⭐ 9.2 Superb (46)</p>
+                                        <p>Prague, Czech Republic</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="swiper-slide" style="flex: 0 0 23%; margin-right: 20px;">
+                            <a href="{% url 'hostel_detail' 5 %}" class="text-decoration-none">
+                                <div class="deal-card position-relative" style="height: 338px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                                    <span class="discount-tag">50%</span>
+                                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/25505278.jpg?k=5e523714b5648de97798b81973b52d693ade61fff6314c33f8ac88ae28ae8fda&o=&hp=1" alt="Hostel" style="width: 100%; height: 200px; object-fit: cover;">
+                                    <div class="deal-details p-3">
+                                        <h5>Sloth Backpackers Hostel</h5>
+                                        <p class="rating">⭐ 8.5 Fabulous (744)</p>
+                                        <p>Monteverde, Costa Rica</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Buttons -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+
+                <!-- Initialize Swiper -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var swiper = new Swiper(".mySwiper", {
+                            slidesPerView: 4,
+                            spaceBetween: 20,
+                            navigation: {
+                                nextEl: ".swiper-button-next",
+                                prevEl: ".swiper-button-prev",
+                            },
+                            loop: true,
+                        });
+                    });
+                </script>
+        
+                <!-- Discover Button -->
+                <div class="text-center mt-4">
+                    <a href="{% url 'all_deals' %}" class="btn" style="background-color: #6c5ce7; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Discover all deals →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Carousel Section -->
+        {% if recent_feedbacks %}
+        <div class="mt-5 mb-5">
+            <div class="feedback-section" style="background: linear-gradient(135deg, #6c5ce7, #a363d9); padding: 60px 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div class="container">
+                    <h2 class="text-center mb-5" style="color: white; font-size: 2.5rem; font-weight: 700;">What Our Travelers Say</h2>
+                    <div id="feedbackCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                        <div class="carousel-inner">
+                            {% for feedback in recent_feedbacks %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <div class="card mx-auto" style="max-width: 800px; border: none; border-radius: 20px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); transform: scale(0.95); transition: transform 0.3s;">
+                                    <div class="card-body p-5">
+                                        <div class="row">
+                                            <div class="col-md-4 text-center">
+                                                {% if feedback.photo %}
+                                                <div class="feedback-image-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                                                    <img src="{{ feedback.photo.url }}" class="img-fluid" alt="Feedback image" style="width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                                {% endif %}
+                                                <h5 class="mt-3 mb-0" style="color: #6c5ce7; font-weight: 600;">{{ feedback.user.username }}</h5>
+                                                <small class="text-muted">{{ feedback.created_at|date:"F d, Y" }}</small>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="quote-icon mb-3" style="color: #6c5ce7; font-size: 2rem;">
+                                                    <i class="fas fa-quote-left"></i>
+                                                </div>
+                                                <p class="card-text fs-5" style="line-height: 1.8; color: #444;">{{ feedback.text }}</p>
+                                                <div class="quote-icon text-end" style="color: #6c5ce7; font-size: 2rem;">
+                                                    <i class="fas fa-quote-right"></i>
+                                                </div>
+                                                <div class="rating mt-3">
+                                                    <i class="fas fa-star" style="color: #ffd700;"></i>
+                                                    <i class="fas fa-star" style="color: #ffd700;"></i>
+                                                    <i class="fas fa-star" style="color: #ffd700;"></i>
+                                                    <i class="fas fa-star" style="color: #ffd700;"></i>
+                                                    <i class="fas fa-star" style="color: #ffd700;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#feedbackCarousel" data-bs-slide="prev" style="width: 50px;">
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(108, 92, 231, 0.7); border-radius: 50%; padding: 20px;"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#feedbackCarousel" data-bs-slide="next" style="width: 50px;">
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(108, 92, 231, 0.7); border-radius: 50%; padding: 20px;"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'tweet_list' %}" class="btn btn-light btn-lg" style="border-radius: 30px; padding: 12px 30px; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                            <i class="fas fa-comments me-2"></i>View All Feedbacks
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="container my-5">
+            <div class="row g-4">
+                <!-- Traveller Profiles -->
+                <div class="col-md-4">
+                    <div class="feature-card p-3" style="background-color: #FFB300;">
+                        <h3>View Traveller Profiles</h3>
+                        <p>See who's going!</p>
+                        <div class="phone-container">
+                            <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_241,h_382/v1676366319/pwa/ups1" alt="Traveller Profiles">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Join Chat -->
+                <div class="col-md-4">
+                    <div class="feature-card p-3" style="background-color: #40E0D0;">
+                        <h3>Join your hostel's Chat</h3>
+                        <p>Chat with travellers 14 days before check-in</p>
+                        <div class="phone-container">
+                            <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_241,h_382/v1676366319/pwa/ups1" alt="Hostel Chat">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RSVP to Linkups -->
+                <div class="col-md-4">
+                    <div class="feature-card p-3" style="background-color: #1E5AFF;">
+                        <h3>RSVP to Linkups</h3>
+                        <p>Explore and hang out with travellers.</p>
+                        <div class="phone-container">
+                            <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_241,h_382/v1676366319/pwa/ups1" alt="RSVP Linkups">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="feature-section">
+                <div class="feature-text">
+                    <p><strong>This is the <span class="highlight">NEW</span> Hostelworld.</strong></p>
+                    <h1>
+                        Helping you <span class="highlight">connect with travellers</span>. 
+                        Even <span class="highlight">before</span> you get to your hostel.
+                    </h1>
+                    <a href="#" class="cta-button">Check what's new ↓</a>
+                </div>
+                <div class="feature-image">
+                    <img src="https://a.hwstatic.com/image/upload/f_auto,w_504,h_568,q_50/v1644922394/pwa/new/The_Spindrift_Hostel-img.jpg"  alt="Travellers on a TukTuk">
+                </div>
+            </div>
+        </div>
+
+        <center>
+            <h1 class="mt-4"><strong>Say <span style="color: #6c5ce7;">hello</span> (before you go!)</strong></h1>
+            <p>Plan a meal with new friends, or gather a crew for a game of beach volleyball!</p>
+        </center>
+        
+        <div class="container chat-container">
+            <!-- Left Static Image -->
+            <img src="https://a.hwstatic.com/image/upload/f_auto,h_480,w_320,q_50/v1644506520/pwa/chat/chat-image-1.jpg" 
+                alt="Left Image" class="img-fluid" style="width: 200px; border-radius: 15px;">
+    
+            <!-- Chat Image (Changes on Swipe) -->
+            <div style="position: relative;">
+                <img id="chatImage" src="https://a.hwstatic.com/image/upload/f_auto,h_656,w_375,q_50/v1645433308/pwa/chat/chat-hostel.png" 
+                    alt="Chat Image" class="chat-image" style="transition: opacity 0.4s ease-in-out;">
+                
+                <!-- Swipe Buttons -->
+                <div class="swipe-buttons">
+                    <button class="swipe-btn" onclick="changeChat(-1)">❮</button>
+                    <button class="swipe-btn" onclick="changeChat(1)">❯</button>
+                </div>
+            </div>
+    
+            <!-- Right Static Image -->
+            <img src="https://a.hwstatic.com/image/upload/f_auto,h_480,w_320,q_50/v1644506518/pwa/chat/chat-image-2.jpg" 
+                alt="Right Image" class="img-fluid" style="width: 200px; border-radius: 15px;">
+        </div>
+        
+        <script>
+            const chatImages = [
+                "https://a.hwstatic.com/image/upload/f_auto,h_656,w_375,q_50/v1645433308/pwa/chat/chat-hostel.png",
+                "https://a.hwstatic.com/image/upload/f_auto,h_656,w_375,q_50/v1645433308/pwa/chat/chat-city.png",
+                "https://a.hwstatic.com/image/upload/f_auto,h_656,w_375,q_50/v1645433308/pwa/chat/chat-direct.png"
+            ];
+            let currentIndex = 0;
+        
+            function changeChat(direction) {
+                const chatImg = document.getElementById("chatImage");
+                chatImg.style.opacity = 0;  // Fade out
+                setTimeout(() => {
+                    currentIndex = (currentIndex + direction + chatImages.length) % chatImages.length;
+                    chatImg.src = chatImages[currentIndex];
+                    chatImg.style.opacity = 1;  // Fade in
+                }, 300); // Matches the transition duration
+            }
+        </script>
+         <br><br><br><br>
+
+<div class="wrapper" style="border-radius: 20px;">
+    <div class="main-container">
+        <!-- Center Card -->
+        <div class="center-card" id="centerCard">
+            <img src="https://a.hwstatic.com/image/upload/f_auto/v1645010222/pwa/whosgoing/los-patios-card_png.jpg" alt="Hostel Card">
+            <h4 class="text-dark mt-2">Los Patios Hostel</h4>
+            <p class="text-muted">Medellin, Colombia</p>
+        </div>
+    
+        <!-- Floating Profile Images (100px) - Will be repositioned -->
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/miser-mike.jpg" class="moving-img" id="img1">
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-pierre.jpg" class="moving-img" id="img2">
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-victoria.jpg" class="moving-img" id="img3">
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-jenny.jpg" class="moving-img" id="img4">
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-f-luiza.jpg" class="moving-img" id="img5">
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-pan.jpg" class="moving-img" id="img6"> 
+        <img src="https://a.hwstatic.com/image/upload/f_auto,q_75,h_166/v1644506092/pwa/whosgoing/user-sam.jpg" class="moving-img" id="img7">
+    
+        <!-- 10 Smaller Floating Profile Images (60px) -->
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/poland_png.png" class="small-moving-img" id="img8">
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/spain_png.png" class="small-moving-img" id="img9">
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/ireland_png.png" class="small-moving-img" id="img10">
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/germany_png.png" class="small-moving-img" id="img11">
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/france_png.png" class="small-moving-img" id="img12">
+         <img src="https://static.vecteezy.com/system/resources/previews/016/328/983/original/united-kingdom-flat-rounded-flag-icon-with-transparent-background-free-png.png" class="small-moving-img" id="img13">
+        <img src="https://static.vecteezy.com/system/resources/previews/026/706/126/non_2x/round-italy-flag-icon-isolated-on-white-background-italian-flag-circle-vector.jpg" class="small-moving-img" id="img14">
+        <img src="https://a.hwstatic.com/image/upload/q_auto,f_auto,h_24/v1644506092/pwa/whosgoing/usa_png.png" class="small-moving-img" id="img15">
+       <img src="https://cdn2.iconfinder.com/data/icons/flags-68/48/Brazil-1024.png" class="small-moving-img" id="img16">
+        <img src="https://cdn3.iconfinder.com/data/icons/50-flags-of-the-world-circular-shape-1/60/Circular_world_Flag_90-512.png" class="small-moving-img" id="img17"> -->
+    </div> 
+    <!-- Text Section -->
+    <div class="text-container">
+        <h2>See <span class="highlight">who's</span> going.</h2>
+        <p>Connect with other travellers staying in the same hostel or city as you.</p>
+    </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                // Spread images further apart to left and right
+                const positions = [
+                    [-450, -250], [450, -250], // Top corners
+                    [-500, 0], [500, 0],       // Left and right center
+                    [-400, 250], [400, 250],   // Bottom corners
+                    [-600, 350], [600, 350]    // Bottom far left and right
+                ];
+                
+                for (let i = 1; i <= 7; i++) {
+                    document.getElementById(`img${i}`).style.transform = `translate(${positions[i - 1][0]}px, ${positions[i - 1][1]}px) scale(1.3)`;
+                }
+    
+                // Small images distributed to extreme edges
+                const smallPositions = [
+                    [-500, -300], [500, -300],  // Top corners
+                    [-550, -100], [550, -100],  // Middle
+                    [-600, 200], [600, 200],    // Lower middle
+                    [-650, 350], [650, 350],    // Bottom far left and right
+                    [-700, -250], [700, -250]   // New extra positions
+                ];
+    
+                for (let i = 8; i <= 17; i++) {
+                    document.getElementById(`img${i}`).style.transform = `translate(${smallPositions[i - 8][0]}px, ${smallPositions[i - 8][1]}px) scale(1.1)`;
+                }
+            }, 500);
+        });
+    </script>
+ 
+ <div class="hidden">
+
+<div class="container text-center my-5">
+    <h2 class="fw-bold">The world’s best hostels, with over <span class="text-success">13 million reviews.</span></h2>
+    <p>With over 16,500 hostels in 180 countries, there’s always room for a new adventure!</p>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <div class="floating-container">
+        <div class="hostel-card">
+            <video src="https://a.hwstatic.com/video/upload/q_50,h_245/v1645099928/pwa/hostelcards/CasaGraciaBarcelona.mp4" autoplay loop muted></video>
+            <p class="fw-bold">Casa Gracia</p>
+            <p>Barcelona, Spain</p>
+        </div>
+
+        <div class="hostel-card">
+            <img src="https://a.hwstatic.com/image/upload/f_auto,q_50,h_245/v1645099928/pwa/hostelcards/CasaAngelHostel.jpg">
+            <p class="fw-bold">Casa Angel Hostel
+            <p>Oaxaca, Mexico
+        </div>
+
+        <div class="hostel-card">
+            <img src="https://a.hwstatic.com/image/upload/f_auto,q_50,h_245/v1645099930/pwa/hostelcards/SaltyJackal.jpg" alt="Hostel 2">
+            <p class="fw-bold">Salty Jackal</p>
+            <p>Swakopmund, Namibia</p>
+        </div>
+        <div class="hostel-card">
+            <video src="https://a.hwstatic.com/video/upload/q_50,h_245/v1645099930/pwa/hostelcards/ViajeroTayronaHostel.mp4" autoplay loop muted></video>
+            <p class="fw-bold">Viajero Tayrona</p>
+            <p>Buritaca, Colombia</p>
+        </div>
+        <div class="hostel-card">
+            <img src="https://a.hwstatic.com/image/upload/q_50,h_245/v1645099928/pwa/hostelcards/Generator.jpg" alt="Hostel 4">
+            <p class="fw-bold">Generator</p>
+            <p>Barcelona, Spain</p>
+        </div>
+        <div class="hostel-card">
+            <video src="https://a.hwstatic.com/video/upload/q_50,h_245/v1645099928/pwa/hostelcards/SelinaCancun.mp4" autoplay loop muted></video>
+            <p class="fw-bold">Selina Cancun</p>
+            <p>Cancun, Mexico</p>
+        </div>
+        <div class="hostel-card">
+            <img src="https://a.hwstatic.com/image/upload/q_50,h_245/v1645099928/pwa/hostelcards/BaseSydney.jpg" alt="Hostel 6">
+            <p class="fw-bold">Base Sydney</p>
+            <p>Sydney, Australia</p>
+        </div>
+        <div class="hostel-card">
+            <video src="https://a.hwstatic.com/video/upload/q_50,h_245/v1645099928/pwa/hostelcards/QueenHostelMilan.mp4" autoplay loop muted></video>
+            <p class="fw-bold">Queen Hostel Milan</p>
+            <p>Milan, Italy</p>
+        </div>
+        <div class="hostel-card">
+            <img src="https://a.hwstatic.com/image/upload/q_50,h_245/v1645099928/pwa/hostelcards/CanaleHostel.jpg" alt="Hostel 8">
+            <p class="fw-bold">Canale Hostel</p>
+            <p>Bangkok, Thailand</p>
+        </div>
+        <div class="hostel-card">
+            <video src="https://a.hwstatic.com/video/upload/q_50,h_245/v1645099928/pwa/hostelcards/LubDKohSamui.mp4" autoplay loop muted></video>
+            <p class="fw-bold">Lub D Koh Samui</p>
+            <p>Koh Samui, Thailand</p>
+        </div>
+    </div>
+</div></div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const elements = document.querySelectorAll(".hidden");
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target); // Stop observing after animation
+                }
+            });
+        }, { threshold: 0.2 });
+
+        elements.forEach(element => observer.observe(element));
+    });
+</script>
+
+
+    <div class="container commitment-section">
+        <div class="row align-items-center">
+            <div class="col-md-6 commitment-image">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,h_488,q_50/v1659430249/pwa/cnc/palmar.beach.lodge.jpg" alt="Palmar Beach Lodge, Panama">
+                <p class="fw-bold mt-2">Palmar Beach Lodge, Panama</p>
+            </div>
+            <div class="col-md-6 commitment-text">
+                <img src="https://a.hwstatic.com/raw/upload/f_auto,q_auto/wds/illustrations/lg/eco.svg" alt="Climate Neutral Logo">
+                <h1><strong>We are committed to a <span class="text-success">better world.</span></strong></h1>
+                <p>Join us in making the planet a priority. We are proud to be a Climate Neutral verified company, committed to reducing our environmental footprint.</p>
+                <p class="fw-bold">Learn more about sustainability</p>
+                <img src="https://a.hwstatic.com/raw/upload/f_auto,q_auto/wds/logos/cnc.svg" alt="Climate Neutral Company Badge">
+            </div>
+        </div>
+    </div>
+
+<div class="container blog-container">
+    <h2 class="fw-bold display-4">Travel Tips & Adventure Advice</h2>
+    <p class="text-muted">Don't miss our backpacker blog, penned by travel experts to assist your adventures!</p>
+
+    <!-- Blog Scroll Section -->
+    <div class="blog-wrapper">
+        <div class="blog-scroll" id="blog-scroll">
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833880/pwa/blog/backpacking-S-Asia.jpg">
+                <div class="blog-content"><h6>Backpackers Guide To South East Asia</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833880/pwa/blog/backpacking-laos-thumb.jpg">
+                <div class="blog-content"><h6>How To Backpack Around Laos</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833881/pwa/blog/backpacking-vietnam-thumb.jpg">
+                <div class="blog-content"><h6>Backpacker's Guide To Travel Around Vietnam</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833880/pwa/blog/backpacking-europe-thumb-image.jpg">
+                <div class="blog-content"><h6>Complete Guide To Backpacking Europe</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833881/pwa/blog/interrail-thumb.jpg">
+                <div class="blog-content"><h6>This Year's Best Interrail Destinations</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833881/pwa/blog/solo-travel-in-spain-thumb.jpg">
+                <div class="blog-content"><h6>Solo Travel In Spain</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833879/pwa/blog/backpacking-usa-thumb.jpg">
+                <div class="blog-content"><h6>What To Know When Backpacking In Australia</h6></div>
+            </div>
+            <!-- Duplicate the content for seamless loop -->
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833880/pwa/blog/backpacking-S-Asia.jpg">
+                <div class="blog-content"><h6>Backpackers Guide To South East Asia</h6></div>
+            </div>
+            <div class="blog-card">
+                <img src="https://a.hwstatic.com/image/upload/f_auto,q_auto,w_360/v1707833880/pwa/blog/backpacking-laos-thumb.jpg">
+                <div class="blog-content"><h6>How To Backpack Around Laos</h6></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <h4>Join our adventurous community!</h4>
+            <p>Sign up to our newsletter for deals, inspo, and other travel treats!</p>
+            <div class="input-group mb-3 w-50 mx-auto">
+                <input type="email" class="form-control" placeholder="Your email address">
+                <button class="btn btn-warning">&rarr;</button>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <h5>Accommodation</h5>
+                    <a href="#">Hostels</a><br>
+                    <a href="#">Hotels</a><br>
+                    <a href="#">Bed and Breakfast</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <a href="#">Blog</a><br>
+                    <a href="#">Booking Guarantee</a><br>
+                    <a href="#">Hostel Awards</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>About Us</h5>
+                    <a href="#">Hostelworld Group PLC</a><br>
+                    <a href="#">Press</a><br>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="col-md-3">
+                    <h5>Work With Us</h5>
+                    <a href="#">Hostel Sign Up</a><br>
+                    <a href="#">Affiliate Program</a><br>
+                    <a href="#">Hostelworld Inbox</a>
+                </div>
+            </div>
+            <div class="mt-4">
+                <p>&copy; 1999-2025 Hostelworld.com Limited</p>
+                <a href="#">Data Protection Notice & DSA</a> | 
+                <a href="#">Terms & Legal</a> | 
+                <a href="#">Cookie Preferences</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    {% endblock %}

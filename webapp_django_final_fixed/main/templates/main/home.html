@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+<link rel='stylesheet' href='{% static "main/style.css" %}'>
+<h1>Search</h1>
+<form method="POST">
+  {% csrf_token %}
+  Location: <input type="text" name="location"><br>
+  Check-in: <input type="text" name="checkin_date"><br>
+  Check-out: <input type="text" name="checkout_date"><br>
+  Guests: <input type="number" name="guests"><br>
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
